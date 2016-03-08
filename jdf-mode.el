@@ -2,19 +2,28 @@
 
 (provide 'jdf-mode)
 
+;; regexp-opt: compte a regexp from a list of strings 
+;; (eg. (regexp-opt '("str1" "str2") t) ). 
+;; If a second argument is provided then  
+
 ;; ;;;###autoload
 ;; (add-to-list 'auto-mode-alist '("\\.cu$" . jdf-mode))
 
 ;; define several category of keywords
 (setq jdf-types nil)
 
-;; including JDF constants 
+;; including JDF constants
 (setq jdf-const nil)
 
-(setq jdf-keywords '("BODY" "END"))
+(setq jdf-keywords '("BODY" "END"
+                     "NEW"
+                     "type"
+                     "RW" "READ" "WRITE"
+                     "->" "<-"))
 
-;; (setq jdf-builtins nil)
-(setq jdf-builtins '("inline_c"))
+(setq jdf-builtins nil)
+;; (setq jdf-builtins '("inline_c"))
+;; (defconst jdf-builtins '("inline_c"))
 
 ;; (setq jdf-func '("\\<\\(\\sw+\\) ?(" "\\<\\(\\sw+\\)<<<"))
 (setq jdf-func nil)
@@ -23,7 +32,11 @@
 (setq jdf-types-regexp (regexp-opt jdf-types 'words))
 (setq jdf-const-regexp (regexp-opt jdf-const 'words))
 (setq jdf-keywords-regexp (regexp-opt jdf-keywords 'words))
-(setq jdf-builtins-regexp (regexp-opt jdf-builtins 'words))
+;; (setq jdf-builtins-regexp (regexp-opt jdf-builtins 'words))
+;; (setq jdf-builtins-regexp "\\(inline_c[ \t]*%{\\)")
+;; (setq jdf-builtins-regexp "\\(->\\)")
+(setq jdf-builtins-regexp (regexp-opt '("->" "<-")))
+;; (setq jdf-builtins-regexp (regexp-opt '("inline_c" "test")))
 (setq jdf-func-regexp (regexp-opt jdf-func 'words))
 
 ;; create the list for font-lock.
