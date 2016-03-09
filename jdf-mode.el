@@ -28,14 +28,16 @@
 ;; (setq jdf-func '("\\<\\(\\sw+\\) ?(" "\\<\\(\\sw+\\)<<<"))
 (setq jdf-func nil)
 
+;; (defconst jdf-inline-re "\\<\\(inline_c\\)[ \t]*%{")
+
 ;; generate regex string for each category of keywords
 (setq jdf-types-regexp (regexp-opt jdf-types 'words))
 (setq jdf-const-regexp (regexp-opt jdf-const 'words))
 (setq jdf-keywords-regexp (regexp-opt jdf-keywords 'words))
 ;; (setq jdf-builtins-regexp (regexp-opt jdf-builtins 'words))
-;; (setq jdf-builtins-regexp "\\(inline_c[ \t]*%{\\)")
-;; (setq jdf-builtins-regexp "\\(->\\)")
-(setq jdf-builtins-regexp (regexp-opt '("->" "<-")))
+;; (setq jdf-builtins-regexp jdf-inline-re)
+;; (setq jdf-builtins-regexp "\\<\\(inline_c\\)[ \t]*%{" 1)
+;; (setq jdf-builtins-regexp (regexp-opt '("->" "<-")))
 ;; (setq jdf-builtins-regexp (regexp-opt '("inline_c" "test")))
 (setq jdf-func-regexp (regexp-opt jdf-func 'words))
 
