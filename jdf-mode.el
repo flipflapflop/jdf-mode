@@ -18,8 +18,7 @@
 (setq jdf-keywords '("BODY" "END"
                      "NEW"
                      "type"
-                     "RW" "READ" "WRITE"
-                     "->" "<-"))
+                     "RW" "READ" "WRITE"))
 
 (setq jdf-builtins nil)
 ;; (setq jdf-builtins '("inline_c"))
@@ -48,14 +47,50 @@
         (,jdf-const-regexp . font-lock-constant-face)
         (,jdf-keywords-regexp . font-lock-keyword-face)
         (,jdf-builtins-regexp . font-lock-builtin-face)
-        ("\\<\\(inline_c\\)[ \t]*%{" 1 font-lock-builtin-face)
+        ("\\(->\\|<-\\)" . font-lock-keyword-face)
+        ("\\<\\(inline_c\\)[ \t]*%{" (1 font-lock-builtin-face))
+        ("\\<\\(\\sw+\\)[ \t]*\\(\\[\\)" (1 font-lock-variable-name-face))
         (,jdf-func-regexp . font-lock-function-name-face)
         ))
+
+;; (defun jdf-indent-line ()
+;;   "Indent current line for `jdf-mode'."
+;;   (interactive)
+;;   (let ((indent-col 0))
+;;     (save-excursion
+;;       (beginning-of-line)
+;;       (condition-case nil
+;;           (while t
+;;             (backward-up-list 1)
+;;             (when (looking-at "[[{]")
+;;               (setq indent-col (+ indent-col foo-indent-offset))))
+;;         (error nil)))
+;;     (save-excursion
+;;       (back-to-indentation)
+;;       (when (and (looking-at "[]}]") (>= indent-col foo-indent-offset))
+;;         (setq indent-col (- indent-col foo-indent-offset))))
+;;     (indent-line-to indent-col)))
+
+  ;; (if (clojure-in-docstring-p)
+  ;;     (save-excursion
+  ;;       (beginning-of-line)
+  ;;       (when (and (looking-at "^\\s-*")
+  ;;                  (<= (string-width (match-string-no-properties 0))
+  ;;                      (string-width (clojure-docstring-fill-prefix))))
+  ;;         (replace-match (clojure-docstring-fill-prefix))))
+  ;;   (c-indent-line))
+
+(defun jdf-indent-line ()
+  "Indent current line as jdf code."
+  (interactive)
+  (c-indent-line))
 
 (define-derived-mode jdf-mode c-mode "JDF"
   "Major mode for editing JDF files"
   ;; code for syntax highlighting
-  (font-lock-add-keywords nil jdf-font-lock-keywords))
+  (font-lock-add-keywords nil jdf-font-lock-keywords)
+  (set (make-local-variable 'indent-line-function) 'jdf-indent-line)
+  )
 
 ;; clear everything
 (setq jdf-types nil)
