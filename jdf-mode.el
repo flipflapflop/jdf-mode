@@ -34,7 +34,7 @@
 (setq jdf-types-regexp (regexp-opt jdf-types 'words))
 (setq jdf-const-regexp (regexp-opt jdf-const 'words))
 (setq jdf-keywords-regexp (regexp-opt jdf-keywords 'words))
-;; (setq jdf-builtins-regexp (regexp-opt jdf-builtins 'words))
+(setq jdf-builtins-regexp (regexp-opt jdf-builtins 'words))
 ;; (setq jdf-builtins-regexp jdf-inline-re)
 ;; (setq jdf-builtins-regexp "\\<\\(inline_c\\)[ \t]*%{" 1)
 ;; (setq jdf-builtins-regexp (regexp-opt '("->" "<-")))
@@ -48,6 +48,7 @@
         (,jdf-const-regexp . font-lock-constant-face)
         (,jdf-keywords-regexp . font-lock-keyword-face)
         (,jdf-builtins-regexp . font-lock-builtin-face)
+        ("\\<\\(inline_c\\)[ \t]*%{" 1 font-lock-builtin-face)
         (,jdf-func-regexp . font-lock-function-name-face)
         ))
 
